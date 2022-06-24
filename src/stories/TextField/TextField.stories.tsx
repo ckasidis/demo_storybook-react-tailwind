@@ -1,7 +1,6 @@
-import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-
 import { TextField } from './TextField';
+import { HiOutlineUser, HiOutlineX, HiOutlineEyeOff } from 'react-icons/hi';
 
 export default {
 	title: 'Components/TextField',
@@ -9,46 +8,98 @@ export default {
 } as ComponentMeta<typeof TextField>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof TextField> = (args) => (
-	<ul className="flex flex-col gap-4">
-		<li className="flex flex-row gap-4 items-end">
-			<TextField {...args} />
-			<TextField label="Label" {...args} />
+const Template: ComponentStory<typeof TextField> = () => (
+	<ul className="flex flex-col gap-8">
+		<li className="flex flex-row items-end gap-4">
+			<TextField />
+			<TextField label="Label" />
 		</li>
-		<li className="flex flex-row gap-4 items-end">
-			<TextField isValid={false} errorMessage="Error Message" {...args} />
+		<li className="flex flex-row items-end gap-4">
+			<TextField placeholder="Placeholder" />
+			<TextField label="Label" placeholder="Placeholder" />
+		</li>
+		<li className="flex flex-row items-end gap-4">
+			<TextField defaultValue={'Input'} />
+			<TextField label="Label" defaultValue={'Input'} />
+		</li>
+		<li className="flex flex-row items-end gap-4">
+			<TextField type={'Password'} defaultValue={'12345'} />
+			<TextField label="Label" type={'Password'} defaultValue={'12345'} />
+		</li>
+	</ul>
+);
+
+export const Normal = Template.bind({});
+Normal.args = {};
+
+export const Error = Template.bind({});
+Error.args = {
+	isValid: false,
+	errorMessage: 'Error Message',
+};
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+	disabled: true,
+};
+
+// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
+const TemplateWithIcon: ComponentStory<typeof TextField> = () => (
+	<ul className="flex flex-col gap-8">
+		<li className="flex flex-row items-end gap-4">
+			<TextField leftIcon={HiOutlineUser} />
+			<TextField rightIcon={HiOutlineX} />
+			<TextField leftIcon={HiOutlineUser} rightIcon={HiOutlineX} />
+		</li>
+		<li className="flex flex-row items-end gap-4">
+			<TextField leftIcon={HiOutlineUser} placeholder="Placeholder" />
+			<TextField rightIcon={HiOutlineX} placeholder="Placeholder" />
 			<TextField
-				label="Label"
-				isValid={false}
-				errorMessage="Error Message"
-				{...args}
+				leftIcon={HiOutlineUser}
+				rightIcon={HiOutlineX}
+				placeholder="Placeholder"
+			/>
+		</li>
+		<li className="flex flex-row items-end gap-4">
+			<TextField leftIcon={HiOutlineUser} defaultValue={'Input'} />
+			<TextField rightIcon={HiOutlineX} defaultValue={'Input'} />
+			<TextField
+				leftIcon={HiOutlineUser}
+				rightIcon={HiOutlineX}
+				defaultValue={'Input'}
+			/>
+		</li>
+		<li className="flex flex-row items-end gap-4">
+			<TextField
+				leftIcon={HiOutlineUser}
+				type={'Password'}
+				defaultValue={'12345'}
+			/>
+			<TextField
+				rightIcon={HiOutlineEyeOff}
+				type={'Password'}
+				defaultValue={'12345'}
+			/>
+			<TextField
+				leftIcon={HiOutlineEyeOff}
+				rightIcon={HiOutlineX}
+				type={'Password'}
+				defaultValue={'12345'}
 			/>
 		</li>
 	</ul>
 );
 
-export const Blank = Template.bind({});
-Blank.args = {};
+export const NormalWithIcon = TemplateWithIcon.bind({});
+NormalWithIcon.args = {};
 
-export const Placeholder = Template.bind({});
-Placeholder.args = {
-	placeholder: 'Placeholder',
+export const ErrorWithIcon = TemplateWithIcon.bind({});
+ErrorWithIcon.args = {
+	isValid: false,
+	errorMessage: 'Error Message',
 };
 
-export const Input = Template.bind({});
-Input.args = {
-	placeholder: 'Placeholder',
-	defaultValue: 'Input',
-};
-
-export const Password = Template.bind({});
-Password.args = {
-	type: 'password',
-	placeholder: 'Placeholder',
-	defaultValue: '12345',
-};
-
-export const BlankWithLabel = Template.bind({});
-BlankWithLabel.args = {
-	label: 'Label',
+export const DisabledWithIcon = TemplateWithIcon.bind({});
+DisabledWithIcon.args = {
+	disabled: true,
 };

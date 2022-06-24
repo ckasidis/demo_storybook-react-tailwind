@@ -1,5 +1,11 @@
-import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
-import { UserIcon } from '@heroicons/react/outline';
+import {
+	createElement,
+	CSSProperties,
+	DetailedHTMLProps,
+	InputHTMLAttributes,
+	MouseEventHandler,
+} from 'react';
+import { IconType } from 'react-icons';
 
 /**
  * Text Field Input for Text Input and Password
@@ -10,65 +16,133 @@ interface TextFieldProps
 		HTMLInputElement
 	> {
 	/**
-	 * Text Field Label
+	 * display left icon
 	 */
-	label?: string;
+	leftIcon?: IconType;
+	onLeftIconClick?: MouseEventHandler<SVGSVGElement>;
 	/**
-	 * If false, the Error Message will be displayed
+	 * display right icon
+	 */
+	rightIcon?: IconType;
+	onRightIconClick?: MouseEventHandler<SVGSVGElement>;
+	/**
+	 * disabled attribute of text input
+	 */
+	disabled?: boolean;
+	/**
+	 * if false, the error message will be displayed
 	 */
 	isValid?: boolean;
 	/**
-	 * Error Message
+	 * style attribute of text input
+	 */
+	style?: CSSProperties;
+	/**
+	 * error message
 	 */
 	errorMessage?: string;
 	/**
-	 * Display leftIcon
+	 * style attribute of error message
 	 */
-	leftIcon?: boolean;
+	errorMessageStyle?: CSSProperties;
+	/**
+	 * label of text input
+	 */
+	label?: string;
+	/**
+	 * style attribute of label
+	 */
+	labelStyle?: CSSProperties;
+	/**
+	 * style attribute of container
+	 */
+	containerStyle?: CSSProperties;
 }
 
-/**
- * Text Field Input for Text Input and Password
- */
 export const TextField = ({
-	label,
+	leftIcon,
+	onLeftIconClick = () => {},
+	rightIcon,
+	onRightIconClick = () => {},
+	disabled = false,
 	isValid = true,
+	style,
 	errorMessage,
-	leftIcon = true,
+	errorMessageStyle,
+	label,
+	labelStyle,
+	containerStyle,
 	...props
 }: TextFieldProps) => {
 	return (
-		<div>
+		<div style={containerStyle}>
 			{label ? (
-				<label className="text-sm leading-5">
+				<label style={labelStyle} className="text-sm leading-5">
 					{label}
 					<div className="relative mt-1">
-						{leftIcon && (
-							<UserIcon className="absolute left-[19.33px] top-[15px] h-[14px]" />
-						)}
+						{leftIcon &&
+							createElement(leftIcon, {
+								className: `absolute left-[18px] top-[15px] h-[14px] ${
+									disabled
+										? 'text-neutral-300'
+										: isValid
+										? ''
+										: 'text-error-500'
+								}`,
+							})}
+						{rightIcon &&
+							createElement(rightIcon, {
+								className: `absolute right-[18px] top-[15px] h-[14px] ${
+									disabled ? 'text-neutral-300' : ''
+								}`,
+							})}
 						<input
+							style={style}
 							{...props}
-							className={`h-[44px] pl-[42px] pr-3 px-4 ${
+							className={`h-[44px] py-3 px-4 ${leftIcon ? 'pl-[42px]' : ''} ${
+								rightIcon ? 'pr-[42px]' : ''
+							} ${
 								isValid ? '' : 'border border-error-500'
-							} rounded-[5px] shadow-[0_0_10px_rgba(0,0,0,0.1)] focus:outline-none focus:border focus:border-selection-100 text-sm placeholder-[#999999]`}
+							} rounded-[5px] shadow-[0_0_10px_rgba(0,0,0,0.1)] text-sm placeholder-[#999999] 
+							focus:outline-none focus:border focus:border-selection-100
+							disabled:bg-neutral-50 disabled:outline-none disabled:border disabled:border-neutral-50 disabled:shadow-none disabled:text-neutral-300`}
+							disabled={disabled}
 						/>
 					</div>
 				</label>
 			) : (
-				<div className="relative">
-					{leftIcon && (
-						<UserIcon className="absolute left-[19.33px] top-[15px] h-[14px]" />
-					)}
+				<div className="relative mt-1">
+					{leftIcon &&
+						createElement(leftIcon, {
+							className: `absolute left-[18px] top-[15px] h-[14px] ${
+								disabled ? 'text-neutral-300' : isValid ? '' : 'text-error-500'
+							}`,
+						})}
+					{rightIcon &&
+						createElement(rightIcon, {
+							className: `absolute right-[18px] top-[15px] h-[14px] ${
+								disabled ? 'text-neutral-300' : ''
+							}`,
+						})}
 					<input
+						style={style}
 						{...props}
-						className={`h-[44px] pl-[42px] pr-3 px-4 ${
+						className={`h-[44px] py-3 px-4 ${leftIcon ? 'pl-[42px]' : ''} ${
+							rightIcon ? 'pr-[42px]' : ''
+						} ${
 							isValid ? '' : 'border border-error-500'
-						} rounded-[5px] shadow-[0_0_10px_rgba(0,0,0,0.1)] focus:outline-none focus:border focus:border-selection-100 text-sm placeholder-[#999999]`}
+						} rounded-[5px] shadow-[0_0_10px_rgba(0,0,0,0.1)] text-sm placeholder-[#999999] 
+					focus:outline-none focus:border focus:border-selection-100
+					disabled:bg-neutral-50 disabled:outline-none disabled:border disabled:border-neutral-50 disabled:shadow-none disabled:text-neutral-300`}
+						disabled={disabled}
 					/>
 				</div>
 			)}
 			{!isValid && errorMessage && (
-				<p className="mt-1 text-xs text-error-500 leading-[18px]">
+				<p
+					style={errorMessageStyle}
+					className="mt-1 text-xs text-error-500 leading-[18px]"
+				>
 					{errorMessage}
 				</p>
 			)}
