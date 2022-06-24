@@ -7,8 +7,13 @@ export default {
 	component: TextField,
 } as ComponentMeta<typeof TextField>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof TextField> = () => (
+const Template: ComponentStory<typeof TextField> = (args) => (
+	<TextField {...args} />
+);
+export const Blank = Template.bind({});
+Blank.args = {};
+
+const TemplateWithLabel: ComponentStory<typeof TextField> = () => (
 	<ul className="flex flex-col gap-8">
 		<li className="flex flex-row items-end gap-4">
 			<TextField />
@@ -29,17 +34,17 @@ const Template: ComponentStory<typeof TextField> = () => (
 	</ul>
 );
 
-export const Normal = Template.bind({});
-Normal.args = {};
+export const NormalWithLabel = TemplateWithLabel.bind({});
+NormalWithLabel.args = {};
 
-export const Error = Template.bind({});
-Error.args = {
+export const ErrorWithLabel = TemplateWithLabel.bind({});
+ErrorWithLabel.args = {
 	isValid: false,
 	errorMessage: 'Error Message',
 };
 
-export const Disabled = Template.bind({});
-Disabled.args = {
+export const DisabledWithLabel = TemplateWithLabel.bind({});
+DisabledWithLabel.args = {
 	disabled: true,
 };
 
