@@ -1,11 +1,10 @@
 import {
-	createElement,
 	CSSProperties,
 	DetailedHTMLProps,
 	InputHTMLAttributes,
-	MouseEventHandler,
+	ReactNode,
 } from 'react';
-import { IconType } from 'react-icons';
+import { IconContext } from 'react-icons';
 
 /**
  * Text Field Input for Text Input and Password
@@ -18,13 +17,11 @@ interface TextFieldProps
 	/**
 	 * display left icon
 	 */
-	leftIcon?: IconType;
-	onLeftIconClick?: MouseEventHandler<SVGSVGElement>;
+	leftIcon?: ReactNode;
 	/**
 	 * display right icon
 	 */
-	rightIcon?: IconType;
-	onRightIconClick?: MouseEventHandler<SVGSVGElement>;
+	rightIcon?: ReactNode;
 	/**
 	 * disabled attribute of text input
 	 */
@@ -61,9 +58,7 @@ interface TextFieldProps
 
 export const TextField = ({
 	leftIcon,
-	onLeftIconClick = () => {},
 	rightIcon,
-	onRightIconClick = () => {},
 	disabled = false,
 	isValid = true,
 	style,
@@ -80,8 +75,51 @@ export const TextField = ({
 				<label style={labelStyle} className="text-sm leading-5">
 					{label}
 					<div className="relative mt-1">
-						{leftIcon &&
-							createElement(leftIcon, {
+						{leftIcon && (
+							<IconContext.Provider
+								value={{
+									className: `absolute left-[18px] top-[15px] h-[14px] ${
+										disabled
+											? 'text-neutral-300'
+											: isValid
+											? ''
+											: 'text-error-500'
+									}`,
+								}}
+							>
+								{leftIcon}
+							</IconContext.Provider>
+						)}
+						{rightIcon && (
+							<IconContext.Provider
+								value={{
+									className: `absolute right-[18px] top-[15px] h-[14px] ${
+										disabled ? 'text-neutral-300' : ''
+									}`,
+								}}
+							>
+								{rightIcon}
+							</IconContext.Provider>
+						)}
+						<input
+							style={style}
+							{...props}
+							className={`h-[44px] w-full py-3 px-4 ${
+								leftIcon ? 'pl-[42px]' : ''
+							} ${rightIcon ? 'pr-[42px]' : ''} ${
+								isValid ? '' : 'border border-error-500'
+							} rounded-[5px] shadow-[0_0_10px_rgba(0,0,0,0.1)] text-sm placeholder-[#999999] 
+					focus:outline-none focus:border focus:border-selection-100
+					disabled:bg-neutral-50 disabled:outline-none disabled:border disabled:border-neutral-50 disabled:shadow-none disabled:text-neutral-300`}
+							disabled={disabled}
+						/>
+					</div>
+				</label>
+			) : (
+				<div className="relative mt-1">
+					{leftIcon && (
+						<IconContext.Provider
+							value={{
 								className: `absolute left-[18px] top-[15px] h-[14px] ${
 									disabled
 										? 'text-neutral-300'
@@ -89,47 +127,28 @@ export const TextField = ({
 										? ''
 										: 'text-error-500'
 								}`,
-							})}
-						{rightIcon &&
-							createElement(rightIcon, {
+							}}
+						>
+							{leftIcon}
+						</IconContext.Provider>
+					)}
+					{rightIcon && (
+						<IconContext.Provider
+							value={{
 								className: `absolute right-[18px] top-[15px] h-[14px] ${
 									disabled ? 'text-neutral-300' : ''
 								}`,
-							})}
-						<input
-							style={style}
-							{...props}
-							className={`h-[44px] py-3 px-4 ${leftIcon ? 'pl-[42px]' : ''} ${
-								rightIcon ? 'pr-[42px]' : ''
-							} ${
-								isValid ? '' : 'border border-error-500'
-							} rounded-[5px] shadow-[0_0_10px_rgba(0,0,0,0.1)] text-sm placeholder-[#999999] 
-							focus:outline-none focus:border focus:border-selection-100
-							disabled:bg-neutral-50 disabled:outline-none disabled:border disabled:border-neutral-50 disabled:shadow-none disabled:text-neutral-300`}
-							disabled={disabled}
-						/>
-					</div>
-				</label>
-			) : (
-				<div className="relative mt-1">
-					{leftIcon &&
-						createElement(leftIcon, {
-							className: `absolute left-[18px] top-[15px] h-[14px] ${
-								disabled ? 'text-neutral-300' : isValid ? '' : 'text-error-500'
-							}`,
-						})}
-					{rightIcon &&
-						createElement(rightIcon, {
-							className: `absolute right-[18px] top-[15px] h-[14px] ${
-								disabled ? 'text-neutral-300' : ''
-							}`,
-						})}
+							}}
+						>
+							{rightIcon}
+						</IconContext.Provider>
+					)}
 					<input
 						style={style}
 						{...props}
-						className={`h-[44px] py-3 px-4 ${leftIcon ? 'pl-[42px]' : ''} ${
-							rightIcon ? 'pr-[42px]' : ''
-						} ${
+						className={`h-[44px] w-full py-3 px-4 ${
+							leftIcon ? 'pl-[42px]' : ''
+						} ${rightIcon ? 'pr-[42px]' : ''} ${
 							isValid ? '' : 'border border-error-500'
 						} rounded-[5px] shadow-[0_0_10px_rgba(0,0,0,0.1)] text-sm placeholder-[#999999] 
 					focus:outline-none focus:border focus:border-selection-100

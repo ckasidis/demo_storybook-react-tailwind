@@ -5,29 +5,63 @@ import { HiOutlineUser, HiOutlineX, HiOutlineEyeOff } from 'react-icons/hi';
 export default {
 	title: 'Components/TextField',
 	component: TextField,
+	argTypes: {
+		leftIcon: {
+			control: {
+				type: null,
+			},
+		},
+		rightIcon: {
+			control: {
+				type: null,
+			},
+		},
+	},
 } as ComponentMeta<typeof TextField>;
 
 const Template: ComponentStory<typeof TextField> = (args) => (
-	<TextField {...args} />
+	<ul className="flex flex-col gap-8">
+		<li className="flex flex-row flex-wrap items-end gap-4">
+			<TextField {...args} />
+			<TextField leftIcon={<HiOutlineUser />} {...args} />
+			<TextField rightIcon={<HiOutlineX />} {...args} />
+			<TextField
+				leftIcon={<HiOutlineUser />}
+				rightIcon={<HiOutlineX />}
+				{...args}
+			/>
+		</li>
+		<li className="flex flex-row flex-wrap items-end gap-4">
+			<TextField label="Label" {...args} />
+			<TextField label="Label" leftIcon={<HiOutlineUser />} {...args} />
+			<TextField label="Label" rightIcon={<HiOutlineX />} {...args} />
+			<TextField
+				label="Label"
+				leftIcon={<HiOutlineUser />}
+				rightIcon={<HiOutlineX />}
+				{...args}
+			/>
+		</li>
+	</ul>
 );
 export const Blank = Template.bind({});
 Blank.args = {};
 
 const TemplateWithLabel: ComponentStory<typeof TextField> = (args) => (
 	<ul className="flex flex-col gap-8">
-		<li className="flex flex-row items-end gap-4">
+		<li className="flex flex-row flex-wrap items-end gap-4">
 			<TextField {...args} />
 			<TextField label="Label" {...args} />
 		</li>
-		<li className="flex flex-row items-end gap-4">
+		<li className="flex flex-row flex-wrap items-end gap-4">
 			<TextField placeholder="Placeholder" {...args} />
 			<TextField label="Label" placeholder="Placeholder" {...args} />
 		</li>
-		<li className="flex flex-row items-end gap-4">
+		<li className="flex flex-row flex-wrap items-end gap-4">
 			<TextField defaultValue={'Input'} {...args} />
 			<TextField label="Label" defaultValue={'Input'} {...args} />
 		</li>
-		<li className="flex flex-row items-end gap-4">
+		<li className="flex flex-row flex-wrap items-end gap-4">
 			<TextField type={'Password'} defaultValue={'12345'} {...args} />
 			<TextField
 				label="Label"
@@ -56,47 +90,63 @@ DisabledWithLabel.args = {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const TemplateWithIcon: ComponentStory<typeof TextField> = (args) => (
 	<ul className="flex flex-col gap-8">
-		<li className="flex flex-row items-end gap-4">
-			<TextField leftIcon={HiOutlineUser} {...args} />
-			<TextField rightIcon={HiOutlineX} {...args} />
-			<TextField leftIcon={HiOutlineUser} rightIcon={HiOutlineX} {...args} />
-		</li>
-		<li className="flex flex-row items-end gap-4">
-			<TextField leftIcon={HiOutlineUser} placeholder="Placeholder" {...args} />
-			<TextField rightIcon={HiOutlineX} placeholder="Placeholder" {...args} />
+		<li className="flex flex-row flex-wrap items-end gap-4">
+			<TextField leftIcon={<HiOutlineUser />} {...args} />
+			<TextField rightIcon={<HiOutlineX />} {...args} />
 			<TextField
-				leftIcon={HiOutlineUser}
-				rightIcon={HiOutlineX}
+				leftIcon={<HiOutlineUser />}
+				rightIcon={<HiOutlineX />}
+				{...args}
+			/>
+		</li>
+		<li className="flex flex-row flex-wrap items-end gap-4">
+			<TextField
+				leftIcon={<HiOutlineUser />}
+				placeholder="Placeholder"
+				{...args}
+			/>
+			<TextField
+				rightIcon={<HiOutlineX />}
+				placeholder="Placeholder"
+				{...args}
+			/>
+			<TextField
+				leftIcon={<HiOutlineUser />}
+				rightIcon={<HiOutlineX />}
 				placeholder="Placeholder"
 				{...args}
 			/>
 		</li>
-		<li className="flex flex-row items-end gap-4">
-			<TextField leftIcon={HiOutlineUser} defaultValue={'Input'} {...args} />
-			<TextField rightIcon={HiOutlineX} defaultValue={'Input'} {...args} />
+		<li className="flex flex-row flex-wrap items-end gap-4">
 			<TextField
-				leftIcon={HiOutlineUser}
-				rightIcon={HiOutlineX}
+				leftIcon={<HiOutlineUser />}
+				defaultValue={'Input'}
+				{...args}
+			/>
+			<TextField rightIcon={<HiOutlineX />} defaultValue={'Input'} {...args} />
+			<TextField
+				leftIcon={<HiOutlineUser />}
+				rightIcon={<HiOutlineX />}
 				defaultValue={'Input'}
 				{...args}
 			/>
 		</li>
-		<li className="flex flex-row items-end gap-4">
+		<li className="flex flex-row flex-wrap items-end gap-4">
 			<TextField
-				leftIcon={HiOutlineUser}
+				leftIcon={<HiOutlineUser />}
 				type={'Password'}
 				defaultValue={'12345'}
 				{...args}
 			/>
 			<TextField
-				rightIcon={HiOutlineEyeOff}
+				rightIcon={<HiOutlineEyeOff />}
 				type={'Password'}
 				defaultValue={'12345'}
 				{...args}
 			/>
 			<TextField
-				leftIcon={HiOutlineEyeOff}
-				rightIcon={HiOutlineX}
+				leftIcon={<HiOutlineEyeOff />}
+				rightIcon={<HiOutlineX />}
 				type={'Password'}
 				defaultValue={'12345'}
 				{...args}
