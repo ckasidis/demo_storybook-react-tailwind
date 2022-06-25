@@ -157,7 +157,7 @@ export const TextField = ({
 					/>
 				</div>
 			)}
-			{!isValid && errorMessage && (
+			{!disabled && !isValid && errorMessage && (
 				<p
 					style={errorMessageStyle}
 					className="mt-1 text-xs text-error-500 leading-[18px]"
