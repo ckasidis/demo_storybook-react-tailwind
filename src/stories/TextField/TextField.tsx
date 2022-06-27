@@ -1,10 +1,10 @@
 import {
+	cloneElement,
 	CSSProperties,
 	DetailedHTMLProps,
 	InputHTMLAttributes,
-	ReactNode,
+	ReactElement,
 } from 'react';
-import { IconContext } from 'react-icons';
 
 /**
  * Text Field Input for Text Input and Password
@@ -17,11 +17,11 @@ interface TextFieldProps
 	/**
 	 * display left icon
 	 */
-	leftIcon?: ReactNode;
+	leftIcon?: ReactElement;
 	/**
 	 * display right icon
 	 */
-	rightIcon?: ReactNode;
+	rightIcon?: ReactElement;
 	/**
 	 * disabled attribute of text input
 	 */
@@ -75,32 +75,22 @@ export const TextField = ({
 				<label style={labelStyle} className="text-sm leading-5">
 					{label}
 					<div className="relative mt-1">
-						{leftIcon && (
-							<IconContext.Provider
-								value={{
-									className: `absolute left-[18px] top-[15px] h-[14px] ${
-										disabled
-											? 'text-neutral-300'
-											: isValid
-											? ''
-											: 'text-error-500'
-									}`,
-								}}
-							>
-								{leftIcon}
-							</IconContext.Provider>
-						)}
-						{rightIcon && (
-							<IconContext.Provider
-								value={{
-									className: `absolute right-[18px] top-[15px] h-[14px] ${
-										disabled ? 'text-neutral-300' : ''
-									}`,
-								}}
-							>
-								{rightIcon}
-							</IconContext.Provider>
-						)}
+						{leftIcon &&
+							cloneElement(leftIcon, {
+								className: `absolute left-[18px] top-[15px] h-[14px] ${
+									disabled
+										? 'text-neutral-300'
+										: isValid
+										? ''
+										: 'text-error-500'
+								}`,
+							})}
+						{rightIcon &&
+							cloneElement(rightIcon, {
+								className: `absolute right-[18px] top-[15px] h-[14px] ${
+									disabled ? 'text-neutral-300' : ''
+								}`,
+							})}
 						<input
 							style={style}
 							{...props}
@@ -117,32 +107,18 @@ export const TextField = ({
 				</label>
 			) : (
 				<div className="relative mt-1">
-					{leftIcon && (
-						<IconContext.Provider
-							value={{
-								className: `absolute left-[18px] top-[15px] h-[14px] ${
-									disabled
-										? 'text-neutral-300'
-										: isValid
-										? ''
-										: 'text-error-500'
-								}`,
-							}}
-						>
-							{leftIcon}
-						</IconContext.Provider>
-					)}
-					{rightIcon && (
-						<IconContext.Provider
-							value={{
-								className: `absolute right-[18px] top-[15px] h-[14px] ${
-									disabled ? 'text-neutral-300' : ''
-								}`,
-							}}
-						>
-							{rightIcon}
-						</IconContext.Provider>
-					)}
+					{leftIcon &&
+						cloneElement(leftIcon, {
+							className: `absolute left-[18px] top-[15px] h-[14px] ${
+								disabled ? 'text-neutral-300' : isValid ? '' : 'text-error-500'
+							}`,
+						})}
+					{rightIcon &&
+						cloneElement(rightIcon, {
+							className: `absolute right-[18px] top-[15px] h-[14px] ${
+								disabled ? 'text-neutral-300' : ''
+							}`,
+						})}
 					<input
 						style={style}
 						{...props}
